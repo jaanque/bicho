@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flores ASCII</title>
+
+  <!-- Tipografía monoespaciada nítida para mantener la alineación exacta -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* Lienzo negro puro a pantalla completa sin márgenes ni barras de desplazamiento */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100vw;
+      height: 100vh;
+      background-color: #000000;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(18px, 3.2vh, 36px);
+    }
+
+    /* Arte ASCII centrado con escalado responsive */
+    #jardin {
+      font-family: "JetBrains Mono", "Fira Code", "Courier New", monospace;
+      font-size: clamp(8px, 2.1vw, 22px);
+      line-height: 1.35;
+      letter-spacing: 0.02em;
+      font-variant-ligatures: none;
+      white-space: pre;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    /* Colores vivos y armónicos sobre fondo negro puro */
+    .c-brillo-fuerte {
+      color: #fde68a;
+      text-shadow: 0 0 8px rgba(253, 224, 71, 0.85);
+    }
+
+    .c-brillo-suave {
+      color: #fef08a;
+      opacity: 0.65;
+    }
+
+    .c-margarita {
+      color: #f8fafc;
+      text-shadow: 0 0 7px rgba(248, 250, 252, 0.45);
+    }
+
+    .c-tulipan {
+      color: #c084fc;
+      text-shadow: 0 0 8px rgba(192, 132, 252, 0.6);
+    }
+
+    .c-rosa {
+      color: #fb7185;
+      text-shadow: 0 0 9px rgba(251, 113, 133, 0.65);
+    }
+
+    .c-coral {
+      color: #fda4af;
+      text-shadow: 0 0 8px rgba(253, 164, 175, 0.6);
+    }
+
+    .c-centro {
+      color: #facc15;
+      text-shadow: 0 0 8px rgba(250, 204, 21, 0.8);
+    }
+
+    .c-tallo {
+      color: #4ade80;
+      text-shadow: 0 0 6px rgba(74, 222, 128, 0.35);
+    }
+
+    .c-cesped {
+      color: #16a34a;
+    }
+
+    .c-tierra {
+      color: #5c4033;
+    }
+
+    /* Texto elegante y minimalista con resplandor suave debajo de las flores */
+    .nombre {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 300;
+      font-size: clamp(1.75rem, 4.2vw, 3rem);
+      letter-spacing: 0.35em;
+      padding-left: 0.35em;
+      color: #fce7f3;
+      text-align: center;
+      user-select: none;
+      -webkit-user-select: none;
+      text-shadow:
+        0 0 10px rgba(251, 113, 133, 0.55),
+        0 0 24px rgba(253, 164, 175, 0.3);
+      animation: resplandorSuave 4.5s ease-in-out infinite;
+    }
+
+    @keyframes resplandorSuave {
+      0%,
+      100% {
+        opacity: 0.88;
+        text-shadow:
+          0 0 10px rgba(251, 113, 133, 0.5),
+          0 0 22px rgba(253, 164, 175, 0.25);
+      }
+      50% {
+        opacity: 1;
+        text-shadow:
+          0 0 14px rgba(251, 113, 133, 0.75),
+          0 0 32px rgba(253, 164, 175, 0.42);
+      }
+    }
+  </style>
+</head>
+<body>
+  <pre id="jardin" aria-hidden="true"></pre>
+  <p class="nombre">Maria</p>
+
+  <script>
+    /**
+     * =========================================================================
+     * ANIMACIÓN ASCII DE 8 FOTOGRAMAS (MOVIMIENTO PENDULAR SUAVE)
+     * =========================================================================
+     * Columnas fijas de las raíces en el césped: 10, 23, 36 y 49.
+     * Ciclo: Centro -> Derecha (+1) -> Derecha (+2) -> Derecha (+1) ->
+     *        Centro -> Izquierda (-1) -> Izquierda (-2) -> Izquierda (-1)
+     */
+    const FRAMES = [
+      // Fotograma 0: Centro
+      String.raw`
+        .          *                  .              *    
+                   .        +                   .         
+        _(_)_                     _.-._                   
+       (_)@(_)       wWWWw       ({ @ })                  
+         (_)         (___)        '-.-'        vVVVv      
+          |           ~Y~           |          (___)      
+         \|/           |           \|/          ~Y~       
+          |           \|            |            |        
+          |            |            |\          \|        
+  .,.,.,.,|.,.,.,.,.,.,|.,.,.,.,.,.,|.,.,.,.,.,.,|.,.,.,. 
+  ======================================================= 
+`,
+
+      // Fotograma 1: Derecha suave (+1)
+      String.raw`
+          *        .                  +              .    
+                  .         *                    .        
+         _(_)_                     _.-._                  
+        (_)@(_)       wWWWw       ({ @ })                 
+          (_)         (___)        '-.-'        vVVVv     
+           /           ~Y~           /          (___)     
+         \|/            /          \|/           ~Y~      
+          |           \|            /             /       
+          |            |            |\           \|       
+  .,.,.,.,|.,.,.,.,.,.,|.,.,.,.,.,.,|.,.,.,.,.,.,|.,.,.,. 
+  ======================================================= 
+`,
+
+      // Fotograma 2: Derecha pronunciada (+2)
+      String.raw`
+            .          +              *            .      
+        *                   .               +             
+          _(_)_                     _.-._                 
+         (_)@(_)       wWWWw       ({ @ })                
+           (_)         (___)        '-.-'        vVVVv    
+            /           ~Y~           /          (___)    
+          \|/            /          \|/           ~Y~     
+           /           \/            /             /      
+          |            |            |\           \|       
+  .,.,.,.,|.,.,.,.,.,.,|.,.,.,.,.,.,|.,.,.,.,.,.,|.,.,.,. 
+  ======================================================= 
+`,
+
+      // Fotograma 3: Regreso desde la derecha (+1)
+      String.raw`
+          .        *                  .            +      
+                   +        .                 *           
+         _(_)_                     _.-._                  
+        (_)@(_)       wWWWw       ({ @ })                 
+          (_)         (___)        '-.-'        vVVVv     
+           /           ~Y~           /          (___)     
+         \|/            /          \|/           ~Y~      
+          |           \|            /             /       
+          |            |            |\           \|       
+  .,.,.,.,|.,.,.,.,.,.,|.,.,.,.,.,.,|.,.,.,.,.,.,|.,.,.,. 
+  ======================================================= 
+`,
+
+      // Fotograma 4: Centro
+      String.raw`
+      +            .            *                 .       
+             .                    +             *         
+        _(_)_                     _.-._                   
+       (_)@(_)       wWWWw       ({ @ })                  
+         (_)         (___)        '-.-'        vVVVv      
+          |           ~Y~           |          (___)      
+         \|/           |           \|/          ~Y~       
+          |           \|            |            |        
+          |            |            |\          \|        
+  .,.,.,.,|.,.,.,.,.,.,|.,.,.,.,.,.,|.,.,.,.,.,.,|.,.,.,. 
+  ======================================================= 
+`,
+
+      // Fotograma 5: Izquierda suave (-1)
+      String.raw`
+        *        .              +                 .       
+               .        *                   .             
+       _(_)_                     _.-._                    
+      (_)@(_)       wWWWw       ({ @ })                   
+        (_)         (___)        '-.-'        vVVVv       
+         \           ~Y~           \          (___)       
+        \|/           \           \|/          ~Y~        
+          |           \|            \            \        
+          |            |            |\          \|        
+  .,.,.,.,|.,.,.,.,.,.,|.,.,.,.,.,.,|.,.,.,.,.,.,|.,.,.,. 
+  ======================================================= 
+`,
+
+      // Fotograma 6: Izquierda pronunciada (-2)
+      String.raw`
+      .        +                .             *           
+             *              .         +                   
+      _(_)_                     _.-._                     
+     (_)@(_)       wWWWw       ({ @ })                    
+       (_)         (___)        '-.-'        vVVVv        
+        \           ~Y~           \          (___)        
+        \|/          \           \|/          ~Y~         
+         \           \|            \            \         
+          |            |            |\          \|        
+  .,.,.,.,|.,.,.,.,.,.,|.,.,.,.,.,.,|.,.,.,.,.,.,|.,.,.,. 
+  ======================================================= 
+`,
+
+      // Fotograma 7: Regreso desde la izquierda (-1)
+      String.raw`
+        .          +            *                   .     
+                   .                  *         .         
+       _(_)_                     _.-._                    
+      (_)@(_)       wWWWw       ({ @ })                   
+        (_)         (___)        '-.-'        vVVVv       
+         \           ~Y~           \          (___)       
+        \|/           \           \|/          ~Y~        
+          |           \|            \            \        
+          |            |            |\          \|        
+  .,.,.,.,|.,.,.,.,.,.,|.,.,.,.,.,.,|.,.,.,.,.,.,|.,.,.,. 
+  ======================================================= 
+`
+    ];
+
+    /**
+     * Escapa caracteres especiales de HTML para evitar errores de renderizado.
+     */
+    function escaparHTML(char) {
+      switch (char) {
+        case "&":
+          return "&amp;";
+        case "<":
+          return "&lt;";
+        case ">":
+          return "&gt;";
+        case '"':
+          return "&quot;";
+        case "'":
+          return "&#39;";
+        default:
+          return char;
+      }
+    }
+
+    /**
+     * Asigna la clase de color según el carácter, la fila y la posición de cada flor.
+     */
+    function obtenerClase(char, fila, col) {
+      if (char === " ") return "";
+
+      // Destellos y luciérnagas en la parte superior
+      if (fila <= 1) {
+        return char === "*" || char === "+" ? "c-brillo-fuerte" : "c-brillo-suave";
+      }
+
+      // Base de tierra
+      if (fila === 10) {
+        return "c-tierra";
+      }
+
+      // Césped con raíces de tallos
+      if (fila === 9) {
+        return char === "|" ? "c-tallo" : "c-cesped";
+      }
+
+      // Centro dorado de las flores
+      if (char === "@") {
+        return "c-centro";
+      }
+
+      // Tallos y hojas
+      if (char === "|" || char === "/" || char === "\\" || char === "~" || char === "Y") {
+        return "c-tallo";
+      }
+
+      // Pétalos diferenciados por cada flor
+      if (col < 18) return "c-margarita"; // Margarita blanca
+      if (col < 30) return "c-tulipan";   // Tulipán morado
+      if (col < 44) return "c-rosa";      // Rosa
+      return "c-coral";                   // Tulipán coral
+    }
+
+    /**
+     * Convierte un fotograma en HTML seguro agrupando caracteres contiguos
+     * que comparten la misma clase CSS.
+     */
+    function renderizarFrame(texto) {
+      const lineas = texto.replace(/^\n|\n$/g, "").split("\n");
+      const resultado = [];
+
+      for (let fila = 0; fila < lineas.length; fila++) {
+        const linea = lineas[fila];
+        let htmlLinea = "";
+        let claseActual = "";
+        let buffer = "";
+
+        for (let col = 0; col < linea.length; col++) {
+          const char = linea[col];
+          const clase = obtenerClase(char, fila, col);
+
+          if (clase === claseActual) {
+            buffer += escaparHTML(char);
+          } else {
+            if (buffer.length > 0) {
+              htmlLinea += claseActual
+                ? `<span class="${claseActual}">${buffer}</span>`
+                : buffer;
+            }
+            claseActual = clase;
+            buffer = escaparHTML(char);
+          }
+        }
+
+        if (buffer.length > 0) {
+          htmlLinea += claseActual
+            ? `<span class="${claseActual}">${buffer}</span>`
+            : buffer;
+        }
+
+        resultado.push(htmlLinea);
+      }
+
+      return resultado.join("\n");
+    }
+
+    // Pre-renderizado de los 8 fotogramas y bucle continuo
+    const framesHTML = FRAMES.map(renderizarFrame);
+    const contenedor = document.getElementById("jardin");
+    let indice = 0;
+
+    function animar() {
+      contenedor.innerHTML = framesHTML[indice];
+      indice = (indice + 1) % framesHTML.length;
+    }
+
+    window.addEventListener("load", () => {
+      animar();
+      setInterval(animar, 300);
+    });
+  </script>
+</body>
+</html>
